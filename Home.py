@@ -19,82 +19,82 @@ st.set_page_config(
 # -----------------------------------------------------------------------------
 def inject_custom_css():
     st.markdown("""
-        <style>
-        /* Main background and text */
-        .stApp {
-            background-color: #0E1117;
-            color: #FAFAFA;
-        }
-        
-        /* Headers */
-        h1, h2, h3 {
-            color: #00ADB5 !important;
-            font-family: 'Inter', sans-serif;
-            font-weight: 600;
-        }
-        
-        /* Metric Cards */
-        [data-testid="stMetricValue"] {
-            font-size: 28px !important;
-            color: #F8B500 !important;
-            font-weight: bold;
-        }
-        [data-testid="stMetricLabel"] {
-            font-size: 14px !important;
-            color: #A0AAB2 !important;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        [data-testid="metric-container"] {
-            background: rgba(30, 34, 41, 0.6);
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        [data-testid="metric-container"]:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,173,181,0.2);
-        }
-        
-        /* DataFrame Styling */
-        [data-testid="stDataFrame"] {
-            border-radius: 10px;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        /* Expander */
-        .streamlit-expanderHeader {
-            background-color: rgba(30, 34, 41, 0.8) !important;
-            border-radius: 8px !important;
-            font-weight: bold !important;
-        }
-        
-        /* Sidebar */
-        [data-testid="stSidebar"] {
-            background-color: #1A1F2B;
-            border-right: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        
-        /* Custom Title Gradient */
-        .gradient-text {
-            background: linear-gradient(90deg, #00ADB5, #F8B500);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: 42px;
-            font-weight: 800;
-            margin-bottom: 0px;
-        }
-        
-        /* Separator */
-        hr {
-            border-color: rgba(255, 255, 255, 0.1);
-            margin: 30px 0;
-        }
-        </style>
+    <style>
+    /* Main background and text */
+    .stApp {
+        background-color: #0E1117;
+        color: #FAFAFA;
+    }
+    
+    /* Headers */
+    h1, h2, h3 {
+        color: #00ADB5 !important;
+        font-family: 'Inter', sans-serif;
+        font-weight: 600;
+    }
+    
+    /* Metric Cards */
+    [data-testid="stMetricValue"] {
+        font-size: 28px !important;
+        color: #F8B500 !important;
+        font-weight: bold;
+    }
+    [data-testid="stMetricLabel"] {
+        font-size: 14px !important;
+        color: #A0AAB2 !important;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    [data-testid="metric-container"] {
+        background: rgba(30, 34, 41, 0.6);
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    [data-testid="metric-container"]:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,173,181,0.2);
+    }
+    
+    /* DataFrame Styling */
+    [data-testid="stDataFrame"] {
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    /* Expander */
+    .streamlit-expanderHeader {
+         background-color: rgba(30, 34, 41, 0.8) !important;
+        border-radius: 8px !important;
+        font-weight: bold !important;
+    }
+    
+    /* Sidebar */
+    [data-testid="stSidebar"] {
+        background-color: #1A1F2B;
+        border-right: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    /* Custom Title Gradient */
+    .gradient-text {
+        background: linear-gradient(90deg, #00ADB5, #F8B500);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-size: 42px;
+        font-weight: 800; 
+        margin-bottom: 0px;
+    }
+    
+    /* Separator */
+    hr {
+        border-color: rgba(255, 255, 255, 0.1);
+        margin: 30px 0;
+    }
+    </style>
     """, unsafe_allow_html=True)
 
 inject_custom_css()
@@ -135,24 +135,24 @@ with st.sidebar:
     # Date Filter
     min_date = df['order_date'].min().date()
     max_date = df['order_date'].max().date()
-    
+
     date_range = st.date_input(
         "📅 Select Date Range",
         value=(min_date, max_date),
         min_value=min_date,
         max_value=max_date
     )
-    
+
     # Category Filters
     product_types = ["All"] + list(df['product_type'].dropna().unique())
     selected_product_type = st.selectbox("📦 Product Type", product_types)
-    
+
     states = ["All"] + list(df['state'].dropna().unique())
     selected_state = st.selectbox("🗺️ Region / State", states)
-    
+
     genders = ["All"] + list(df['gender'].dropna().unique())
     selected_gender = st.selectbox("👥 Gender", genders)
-    
+
     st.markdown("---")
     st.markdown("### 📊 Quick Dataset Info")
     st.info(f"Total Records: **{len(df):,}**\n\nTotal Features: **{df.shape[1]}**")
@@ -185,7 +185,7 @@ if filtered_df.empty:
 # Header Section
 # -----------------------------------------------------------------------------
 st.markdown('<p class="gradient-text">🛍️ E-Commerce Executive Dashboard</p>', unsafe_allow_html=True)
-st.markdown("*A comprehensive overview of sales performance, customer demographics, and product trends.*")
+st.markdown("A comprehensive overview of sales performance, customer demographics, and product trends.")
 st.markdown("<br>", unsafe_allow_html=True)
 
 # -----------------------------------------------------------------------------
@@ -213,13 +213,12 @@ st.markdown("<hr>", unsafe_allow_html=True)
 # Main Visualization: Revenue Trend
 # -----------------------------------------------------------------------------
 st.markdown("### 📉 Revenue Trend Over Time")
-
 # Group by day
 daily_revenue = filtered_df.groupby(filtered_df['order_date'].dt.date)['total_price'].sum().reset_index()
 
 fig_trend = px.area(
-    daily_revenue, 
-    x='order_date', 
+    daily_revenue,
+    x='order_date',
     y='total_price',
     color_discrete_sequence=['#00ADB5']
 )
@@ -243,7 +242,6 @@ col1, col2 = st.columns(2)
 with col1:
     st.markdown("### 🏆 Top Product Categories")
     prod_rev = filtered_df.groupby('product_type')['total_price'].sum().sort_values(ascending=True).reset_index()
-    
     fig_bar = px.bar(
         prod_rev, 
         x='total_price', 
@@ -266,7 +264,6 @@ with col1:
 with col2:
     st.markdown("### 🗺️ Sales Distribution by Region")
     state_rev = filtered_df.groupby('state')['total_price'].sum().reset_index()
-    
     fig_donut = px.pie(
         state_rev, 
         values='total_price', 
@@ -297,8 +294,8 @@ with col3:
         age_dist = filtered_df['age group'].value_counts().reset_index()
         age_dist.columns = ['Age Group', 'Count']
         fig_age = px.bar(
-            age_dist, 
-            x='Age Group', 
+            age_dist,
+            x='Age Group',
             y='Count',
             color='Age Group',
             color_discrete_sequence=['#00ADB5', '#F8B500', '#FF6B6B', '#4ECDC4']
@@ -319,9 +316,9 @@ with col4:
     # Using a sample if data is large to prevent lag
     sample_df = filtered_df.sample(n=min(1000, len(filtered_df)), random_state=42)
     fig_scatter = px.scatter(
-        sample_df, 
-        x='price_per_unit', 
-        y='quantity', 
+        sample_df,
+        x='price_per_unit',
+        y='quantity',
         size='total_price',
         color='product_type',
         opacity=0.7,
@@ -347,12 +344,12 @@ st.markdown("### 💡 AI-Generated Insights")
 with st.container():
     st.markdown(f"""
     <div style="background-color: rgba(0, 173, 181, 0.1); border-left: 4px solid #00ADB5; padding: 15px; border-radius: 5px;">
-        <ul style="margin: 0; color: #E0E6ED;">
-            <li><b>Top Performance:</b> Based on current filters, <b>{prod_rev.iloc[-1]['product_type'] if not prod_rev.empty else 'N/A'}</b> is the highest revenue-generating product category.</li>
-            <li><b>Regional Spotlight:</b> <b>{state_rev.sort_values(by='total_price', ascending=False).iloc[0]['state'] if not state_rev.empty else 'N/A'}</b> leads in total sales volume.</li>
-            <li><b>Customer Behavior:</b> The average order value sits at a healthy <b>${avg_order_value:.2f}</b> across {total_orders:,} transactions.</li>
-            <li><b>Data Scope:</b> You are viewing data for <b>{unique_customers:,}</b> unique customers across {len(filtered_df):,} total records.</li>
-        </ul>
+    <ul style="margin: 0; color: #E0E6ED;">
+    <li><b>Top Performance:</b> Based on current filters, <b>{prod_rev.iloc[-1]['product_type'] if not prod_rev.empty else 'N/A'}</b> is the highest revenue-generating product category.</li>
+    <li><b>Regional Spotlight:</b> <b>{state_rev.sort_values(by='total_price', ascending=False).iloc[0]['state'] if not state_rev.empty else 'N/A'}</b> leads in total sales volume.</li>
+    <li><b>Customer Behavior:</b> The average order value sits at a healthy <b>${avg_order_value:.2f}</b> across {total_orders:,} transactions.</li>
+    <li><b>Data Scope:</b> You are viewing data for <b>{unique_customers:,}</b> unique customers across {len(filtered_df):,} total records.</li>
+    </ul>
     </div>
     """, unsafe_allow_html=True)
 
@@ -363,13 +360,13 @@ st.markdown("<br>", unsafe_allow_html=True)
 # -----------------------------------------------------------------------------
 with st.expander("🔍 Explore Raw Data"):
     st.markdown("Filter and sort the raw dataset below:")
-    st.dataframe(
-        filtered_df.style.background_gradient(cmap='viridis', subset=['total_price'])\
-                       .format({'total_price': '${:.2f}', 'price_per_unit': '${:.2f}'}),
-        use_container_width=True,
-        height=400
-    )
     
+    # Apply styling safely
+    styled_df = filtered_df.style.background_gradient(cmap='viridis', subset=['total_price'])
+    styled_df = styled_df.format({'total_price': '${:.2f}', 'price_per_unit': '${:.2f}'})
+    
+    st.dataframe(styled_df, use_container_width=True, height=400)
+
     # Download button
     csv = filtered_df.to_csv(index=False).encode('utf-8')
     st.download_button(
@@ -383,7 +380,7 @@ with st.expander("🔍 Explore Raw Data"):
 # Footer
 # -----------------------------------------------------------------------------
 st.markdown("""
-    <div style="text-align: center; color: #A0AAB2; padding-top: 30px; font-size: 12px;">
-        <p>Built with ❤️ using Streamlit & Plotly | Data Source: Cleaned_df.csv</p>
-    </div>
+<div style="text-align: center; color: #A0AAB2; padding-top: 30px; font-size: 12px;">
+<p>Built with ❤️ using Streamlit & Plotly | Data Source: Cleaned_df.csv</p>
+</div>
 """, unsafe_allow_html=True)
