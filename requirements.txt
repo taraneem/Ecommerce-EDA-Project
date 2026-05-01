@@ -1,0 +1,6 @@
+streamlit==1.56.0
+pandas==3.0.0
+plotly==6.5.2
+numpy==2.4.1
+SQLAlchemy==2.0.49
+PyMySQL==1.4.6
